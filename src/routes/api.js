@@ -14,7 +14,6 @@ export default function apiRoutes({ prisma }) {
   router.get("/service-status", async (req, res, next) => {
     try {
       const services = await prisma.service.findMany({
-        where: { isActive: true },
         orderBy: [{ category: "asc" }, { name: "asc" }]
       });
       res.json({
