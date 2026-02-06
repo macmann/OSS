@@ -13,12 +13,23 @@ export default function apiRoutes({ prisma }) {
 
   router.get("/service-status", async (req, res, next) => {
     try {
+      const { active } = req.query;
+      const filters = {};
+
+      if (active === "true") {
+        filters.isActive = true;
+      } else if (active === "false") {
+        filters.isActive = false;
+      }
+
       const services = await prisma.service.findMany({
+        where: filters,
         orderBy: [{ category: "asc" }, { name: "asc" }]
       });
       res.json({
         generatedAt: new Date().toISOString(),
         overallStatus: overallStatus(services),
+        count: services.length,
         services
       });
     } catch (error) {
