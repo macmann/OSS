@@ -47,6 +47,11 @@ paths:
   /api/service-status:
     get:
       summary: Current service status board
+      parameters:
+        - in: query
+          name: active
+          schema:
+            type: boolean
       responses:
         '200':
           description: Service status snapshot
@@ -61,6 +66,8 @@ paths:
                   overallStatus:
                     type: string
                     enum: [OPERATIONAL, DEGRADED, PARTIAL_OUTAGE, MAJOR_OUTAGE, MAINTENANCE]
+                  count:
+                    type: integer
                   services:
                     type: array
                     items:
