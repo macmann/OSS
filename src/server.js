@@ -15,6 +15,10 @@ import { STATUS_LABELS, STATUS_COLORS } from "./lib/status.js";
 
 dotenv.config();
 
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = "file:./dev.db";
+}
+
 const prisma = new PrismaClient();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
